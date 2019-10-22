@@ -33,7 +33,7 @@ import java.util.List;
 public class LoginScreen extends AppCompatActivity {
 
     EditText mobile,password;
-    Button login,b2;
+    Button login,register,b2;
     String mob,passw;
 
     @Override
@@ -44,12 +44,21 @@ public class LoginScreen extends AppCompatActivity {
         mobile= findViewById(R.id.mobile);
         password= findViewById(R.id.password);
         login = findViewById(R.id.login);
-        Button b2 = findViewById(R.id.b2);
+        register = findViewById(R.id.register);
+        b2 = findViewById(R.id.b2);
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),UserHome.class);
+                Intent i = new Intent(getApplicationContext(),Add_Events.class);
+                startActivity(i);
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),Registration.class);
                 startActivity(i);
             }
         });

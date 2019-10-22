@@ -2,35 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".LoginScreen">
+    tools:context=".Registration">
 
     <EditText
-        android:id="@+id/mobile"
+        android:id="@+id/reg_mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/reg_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Login" />
 
-    <Button
-        android:id="@+id/b2"
+    <EditText
+        android:id="@+id/reg_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Navigate" />
+        android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Register" />
+
 
 
 </LinearLayout>

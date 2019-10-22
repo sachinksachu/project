@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppThemea" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
+        ...
+    </style>
+
 </resources>

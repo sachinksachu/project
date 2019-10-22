@@ -6,25 +6,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Add_Events">
+    <TextView
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <EditText
-        android:id="@+id/event_name"
+        android:id="@+id/nameevent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/event_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/description"
+        android:id="@+id/place"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/pickdate"
+        android:id="@+id/Choosedate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Select Date" />
+        android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/add"
+        android:id="@+id/Choosetime"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Add Events" />
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/UploadImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/buttonUpload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

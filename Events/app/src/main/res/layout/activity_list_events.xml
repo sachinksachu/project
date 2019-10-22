@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <androidx.cardview.widget.CardView
-android:layout_margin="10dp"
+                android:layout_margin="10dp"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view"
                 android:layout_gravity="center"
@@ -27,6 +27,11 @@ android:layout_margin="10dp"
                     android:text="dgdfgdg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_margin="10dp"
