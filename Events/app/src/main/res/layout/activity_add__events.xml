@@ -38,6 +38,10 @@
         android:id="@+id/UploadImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/Timetext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/buttonUpload"

@@ -3,13 +3,16 @@ package com.example.events;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,6 +69,7 @@ import java.util.UUID;
 import javax.net.ssl.SSLContext;
 
 public class Add_Events extends AppCompatActivity {
+    TimePickerDialog.OnTimeSetListener mOnTimeSetListener;
     private static final int PICK_IMAGE_REQUEST =1;
     private static final int STORAGE_PERMISSION_CODE = 123;
     EditText event_name;
@@ -76,6 +81,12 @@ public class Add_Events extends AppCompatActivity {
     Uri selectedImage;
     Uri filePath;
     private Bitmap bitmap;
+    TextView mTimePicker;
+    TimePickerDialog timePickerDialog;
+    Calendar calendar;
+    int currentHour;
+    int currentMinute;
+    String amPm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +104,7 @@ public class Add_Events extends AppCompatActivity {
         add = findViewById(R.id.buttonUpload);
         addimage = findViewById(R.id.UploadImage);
         imageView = findViewById(R.id.imageView);
+        mTimePicker =findViewById(R.id.Timetext);
 
         pickdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +115,7 @@ public class Add_Events extends AppCompatActivity {
         picktime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePicker();
+                timePicker();
             }
         });
         addimage.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +131,7 @@ public class Add_Events extends AppCompatActivity {
                 eventname = event_name.getText().toString();
                 description = describe.getText().toString();
                 location = venue.getText().toString();
-
+                _time = mTimePicker.getText().toString();
 
 
                 new Add_Events.get(getApplicationContext()).execute();
@@ -179,6 +191,29 @@ public class Add_Events extends AppCompatActivity {
             Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }*/
+
+   private void timePicker()
+   {
+       calendar = Calendar.getInstance();
+       currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+       currentMinute = calendar.get(Calendar.MINUTE);
+
+       timePickerDialog = new TimePickerDialog(Add_Events.this, new TimePickerDialog.OnTimeSetListener() {
+           @Override
+           public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+               if (hourOfDay >= 12) {
+                   amPm = "PM";
+               } else {
+                   amPm = "AM";
+               }
+               mTimePicker.setText(String.format("%02d:%02d", hourOfDay, minutes) + amPm);
+           }
+       }, currentHour, currentMinute, false);
+
+       timePickerDialog.show();
+   }
+
+
     private void pickFromGallery(){
         //Create an Intent with action as ACTION_PICK
         Intent intent = new Intent();
