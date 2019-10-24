@@ -50,7 +50,7 @@ public class LoginScreen extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),Add_Events.class);
+                Intent i = new Intent(getApplicationContext(),ListEvents.class);
                 startActivity(i);
             }
         });
@@ -58,7 +58,7 @@ public class LoginScreen extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),Registration.class);
+                Intent i = new Intent(getApplicationContext(),Add_Events.class);
                 startActivity(i);
             }
         });
