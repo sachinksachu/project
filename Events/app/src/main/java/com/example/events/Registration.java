@@ -1,5 +1,6 @@
 package com.example.events;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.accounts.AccountManager;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -33,13 +39,31 @@ public class Registration extends AppCompatActivity {
 
     private static final int REQUEST_CODE_EMAIL = 1;
     EditText email_, mobile_, password_;
-    String email, password, mobile;
+    String email, password, mobile,token;
     Button reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("SSSSMMMKKK", "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        token = task.getResult().getToken();
+
+                        // Log and toast
+                        // String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d("SSSSMMMKKK", token);
+                        Toast.makeText(Registration.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         mobile_ = findViewById(R.id.reg_mobile);
         email_ = findViewById(R.id.reg_email);
@@ -88,6 +112,7 @@ public class Registration extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("mobile", mobile));
                 nameValuePairs.add(new BasicNameValuePair("email", email));
                 nameValuePairs.add(new BasicNameValuePair("password", password));
+                nameValuePairs.add(new BasicNameValuePair("token", token));
 
                 url = "http://192.168.7.122/add_users.php";
 
