@@ -38,8 +38,8 @@ import java.util.List;
 public class Registration extends AppCompatActivity {
 
     private static final int REQUEST_CODE_EMAIL = 1;
-    EditText email_, mobile_, password_;
-    String email, password, mobile,token;
+    EditText email_, mobile_, password_,name_;
+    String email, password, mobile,token,name;
     Button reg;
 
     @Override
@@ -69,6 +69,7 @@ public class Registration extends AppCompatActivity {
         email_ = findViewById(R.id.reg_email);
         password_ = findViewById(R.id.reg_password);
         reg = findViewById(R.id.register);
+        name_ = findViewById(R.id.reg_name);
 
         try {
             Intent intent = AccountPicker.newChooseAccountIntent(null, null,
@@ -84,6 +85,8 @@ public class Registration extends AppCompatActivity {
                 mobile = mobile_.getText().toString();
                 email = email_.getText().toString();
                 password = password_.getText().toString();
+                name = name_.getText().toString();
+
 
                 new Registration.get(getApplicationContext()).execute();
             }
@@ -109,6 +112,7 @@ public class Registration extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("name", name));
                 nameValuePairs.add(new BasicNameValuePair("mobile", mobile));
                 nameValuePairs.add(new BasicNameValuePair("email", email));
                 nameValuePairs.add(new BasicNameValuePair("password", password));

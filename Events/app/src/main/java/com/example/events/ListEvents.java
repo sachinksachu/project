@@ -45,7 +45,7 @@ import java.util.List;
 public class ListEvents extends AppCompatActivity {
     String urladdress = "http://192.168.7.122/list_event.php";
     //String imageUri = "http://192.168.7.122/image/hackathon%20india.jpg";
-    String[] eventname;
+    String[] eventname,location,description,event_date,event_time;
     String[] photo;
     String[] imagepath;
     BufferedInputStream is;
@@ -55,6 +55,11 @@ public class ListEvents extends AppCompatActivity {
     ListView listView;
     ArrayList<String> al_eventname = new ArrayList<String>();
     ArrayList<String> al_photo = new ArrayList<String>();
+    ArrayList<String> al_description = new ArrayList<String>();
+    ArrayList<String> al_event_date = new ArrayList<String>();
+    ArrayList<String> al_event_time = new ArrayList<String>();
+    ArrayList<String> al_location = new ArrayList<String>();
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +88,12 @@ public class ListEvents extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), ViewEachEvents.class);
                 i.putExtra("eventname",al_eventname.get(position));
                 i.putExtra("photo",al_photo.get(position));
+                i.putExtra("description",al_description.get(position));
+                i.putExtra("location",al_location.get(position));
+                i.putExtra("event_date",al_event_date.get(position));
+                i.putExtra("event_time",al_event_time.get(position));
+
+
                 startActivity(i);
             }
         });
@@ -132,13 +143,27 @@ public class ListEvents extends AppCompatActivity {
                 JSONObject jobj = null;
                 eventname = new String[js.length()];
                 photo = new String[js.length()];
+                location = new String[js.length()];
+                description = new String[js.length()];
+                event_date = new String[js.length()];
+                event_time = new String[js.length()];
 
                 for (int i = 0; i < js.length(); i++) {
                     jobj = js.getJSONObject(i);
                     eventname[i] = jobj.getString("eventname");
                     photo[i] = jobj.getString("photo");
+                    location[i] = jobj.getString("location");
+                    description[i] = jobj.getString("description");
+                    event_time[i] = jobj.getString("event_time");
+                    event_date[i] = jobj.getString("event_date");
+
+
                     al_eventname.add(jobj.getString("eventname"));
                     al_photo.add(jobj.getString("photo"));
+                    al_description.add(jobj.getString("description"));
+                    al_location.add(jobj.getString("location"));
+                    al_event_date.add(jobj.getString("event_date"));
+                    al_event_time.add(jobj.getString("event_time"));
 
                 }
 
@@ -181,8 +206,23 @@ public class ListEvents extends AppCompatActivity {
 
             ImageView thumbnail = (ImageView) convertView.findViewById(R.id.imageView);
             //ImageView loc=(ImageView)convertView.findViewById(R.id.loc);
-            TextView ownername = (TextView) convertView.findViewById(R.id.info_text);
-            ownername.setText(al_eventname.get(position));
+            TextView eventname = (TextView) convertView.findViewById(R.id.info_text);
+            eventname.setText(al_eventname.get(position));
+
+            TextView description = (TextView) convertView.findViewById(R.id.description_text);
+            description.setText(al_description.get(position));
+
+          /*  TextView location = (TextView) convertView.findViewById(R.id.event_date_text);
+            location.setText(al_event_date.get(position));
+
+            TextView event_date = (TextView) convertView.findViewById(R.id.event_time_text);
+            event_date.setText(al_event_time.get(position));
+
+            TextView event_time = (TextView) convertView.findViewById(R.id.location_text);
+            event_time.setText(al_location.get(position));*/
+
+
+
             //thumbnail.setImageResource(R.drawable.pp);
             // loc.setBackgroundResource(0);
             // loc.setImageResource(R.drawable.location);
