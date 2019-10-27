@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".LoginScreen">
+    tools:context=".CoordinatorLogin">
 
+    <!--   <EditText
+           android:id="@+id/coordinator_name"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"/> -->
     <EditText
-        android:id="@+id/mobile"
+        android:id="@+id/coordinator_mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
@@ -22,29 +26,10 @@
         android:layout_height="wrap_content"
         android:hint="Login" />
 
-    <TextView
-        android:id="@+id/user_register"
-        android:text="New User ?"
-        android:onClick="new_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/coordinator_register"
-        android:text="Event Coordinator ?"
-        android:onClick="new_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <Button
         android:id="@+id/b2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Navigate" />
-  <!--  <Button
-        android:id="@+id/register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Register" /> -->
-
 
 </LinearLayout>

@@ -3,11 +3,14 @@ package com.example.events;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -16,14 +19,18 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.SyncStateContract;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -54,10 +61,19 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -73,7 +89,8 @@ public class Add_Events extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST =1;
     private static final int STORAGE_PERMISSION_CODE = 123;
     EditText event_name;
-    EditText describe,venue;
+    EditText describe;
+    SearchView searchView;
     Button addimage,pickdate,add,picktime;
     int mYear,mMonth,mDay;
     String _date,eventname, description,location,_time;
@@ -87,7 +104,10 @@ public class Add_Events extends AppCompatActivity {
     int currentHour;
     int currentMinute;
     String amPm;
-
+    private SimpleCursorAdapter myAdapter;
+    private String[] strArrData = {"No Suggestions"};
+    public static final int CONNECTION_TIMEOUT = 10000;
+    public static final int READ_TIMEOUT = 15000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +117,7 @@ public class Add_Events extends AppCompatActivity {
 
         event_name = findViewById(R.id.nameevent);
         describe = findViewById(R.id.event_desc);
-        venue = findViewById(R.id.place);
+        searchView = findViewById(R.id.place);
 
         pickdate = findViewById(R.id.Choosedate);
         picktime = findViewById(R.id.Choosetime);
@@ -130,7 +150,7 @@ public class Add_Events extends AppCompatActivity {
             public void onClick(View v) {
                 eventname = event_name.getText().toString();
                 description = describe.getText().toString();
-                location = venue.getText().toString();
+
                 _time = mTimePicker.getText().toString();
 
 
@@ -139,6 +159,99 @@ public class Add_Events extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        final String[] from = new String[] {"fishName"};
+        final int[] to = new int[] {android.R.id.text1};
+
+
+
+        myAdapter = new SimpleCursorAdapter(Add_Events.this, android.R.layout.simple_spinner_dropdown_item, null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        new AsyncFetch(Add_Events.this).execute();
+
+        SearchManager searchManager = (SearchManager) Add_Events.this.getSystemService(Context.SEARCH_SERVICE);
+
+
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(Add_Events.this.getComponentName()));
+        searchView.setIconified(false);
+        searchView.setSuggestionsAdapter(myAdapter);
+
+        // Getting selected (clicked) item suggestion
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionClick(int position) {
+
+                // Add clicked text to search box
+                CursorAdapter ca = searchView.getSuggestionsAdapter();
+                Cursor cursor = ca.getCursor();
+                cursor.moveToPosition(position);
+                searchView.setQuery(cursor.getString(cursor.getColumnIndex("fishName")),false);
+                //text1.setQuery(cursor.getString(cursor.getColumnIndex("fishName")),false);
+                location=(cursor.getString(cursor.getColumnIndex("fishName")));
+                return true;
+            }
+
+            @Override
+            public boolean onSuggestionSelect(int position) {
+
+
+                return true;
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                // Filter data
+                final MatrixCursor mc = new MatrixCursor(new String[]{ BaseColumns._ID, "fishName" });
+                for (int i=0; i<strArrData.length; i++) {
+                    if (strArrData[i].toLowerCase().startsWith(s.toLowerCase()))
+                        mc.addRow(new Object[] {i, strArrData[i]});
+                }
+                myAdapter.changeCursor(mc);
+                return false;
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -372,5 +485,139 @@ public class Add_Events extends AppCompatActivity {
 
         }
     }
+
+
+
+
+
+
+
+    private class AsyncFetch extends AsyncTask<String, String, String> {
+
+        ProgressDialog pdLoading = new ProgressDialog(Add_Events.this);
+        HttpURLConnection conn;
+        URL url = null;
+
+        public AsyncFetch(Add_Events add_events) {
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                // Enter URL address where your php file resides or your JSON file address
+                url = new URL("http://192.168.7.122/image/fetch-all-fish.JSON");
+
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return e.toString();
+            }
+            try {
+
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("GET");
+
+                // setDoOutput to true as we receive data
+                conn.setDoOutput(true);
+                conn.connect();
+
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+                return e1.toString();
+            }
+
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                // Check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    // Read data sent from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    // Pass data to onPostExecute method
+                    return (result.toString());
+
+                } else {
+                    return("Connection error");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.toString();
+            } finally {
+                conn.disconnect();
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            //this method will be running on UI thread
+            ArrayList<String> dataList = new ArrayList<String>();
+            pdLoading.dismiss();
+            Toast.makeText(Add_Events.this, result, Toast.LENGTH_LONG).show();
+
+            if(result.equals("no rows")) {
+
+                // Do some action if no data from database
+
+            }else{
+
+                try {
+
+                    JSONArray jArray = new JSONArray(result);
+
+                    // Extract data from json and store into ArrayList
+                    for (int i = 0; i < jArray.length(); i++) {
+                        JSONObject json_data = jArray.getJSONObject(i);
+                        dataList.add(json_data.getString("fish_name"));
+                    }
+
+                    strArrData = dataList.toArray(new String[dataList.size()]);
+                    //Toast.makeText(MainActivity.this, strArrData.toString(), Toast.LENGTH_LONG).show();
+
+                } catch (JSONException e) {
+                    // You to understand what actually error is and handle it appropriately
+                    //Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(Add_Events.this, result, Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+
 
 }

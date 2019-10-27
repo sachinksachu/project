@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -19,6 +20,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,6 +37,7 @@ public class LoginScreen extends AppCompatActivity {
     EditText mobile,password;
     Button login,register,b2;
     String mob,passw;
+    TextView newuser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,9 @@ public class LoginScreen extends AppCompatActivity {
         password= findViewById(R.id.password);
         login = findViewById(R.id.login);
         register = findViewById(R.id.register);
+        //newuser = findViewById(R.id.user_register);
         b2 = findViewById(R.id.b2);
+
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,13 +60,13 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
+       /* register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),Registration.class);
                 startActivity(i);
             }
-        });
+        });*/
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +78,24 @@ public class LoginScreen extends AppCompatActivity {
 
             }
         });
+
+
     }
+    public void new_user(View v)
+    {
+        Intent intent = null;
+        switch(v.getId()){
+            case R.id.user_register:
+                intent = new Intent(this,Registration.class);
+                break;
+            case R.id.coordinator_register:
+                intent = new Intent(this,CoordinatorLogin.class);
+                break;
+
+        }
+        if (null!=intent) startActivity(intent);
+    }
+
     class get extends AsyncTask<String, String, String> {
 
         Context ccc;

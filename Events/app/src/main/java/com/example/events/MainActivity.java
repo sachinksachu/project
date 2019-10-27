@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.w("SSSSMMMKKK", "getInstanceId failed", task.getException());
+                            //Log.w("SSSSMMMKKK", "getInstanceId failed", task.getException());
                             return;
                         }
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // Log and toast
                        // String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("SSSSMMMKKK", token);
+                        //Log.d("SSSSMMMKKK", token);
                         Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                     }
                 });
