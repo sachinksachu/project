@@ -583,7 +583,7 @@ public class Add_Events extends AppCompatActivity {
             //this method will be running on UI thread
             ArrayList<String> dataList = new ArrayList<String>();
             pdLoading.dismiss();
-            Toast.makeText(Add_Events.this, result, Toast.LENGTH_LONG).show();
+           // Toast.makeText(Add_Events.this, result, Toast.LENGTH_LONG).show();
 
             if(result.equals("no rows")) {
 

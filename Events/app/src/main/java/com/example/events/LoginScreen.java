@@ -55,7 +55,7 @@ public class LoginScreen extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),ListEvents.class);
+                Intent i = new Intent(getApplicationContext(),UserHome.class);
                 startActivity(i);
             }
         });
@@ -155,7 +155,7 @@ public class LoginScreen extends AppCompatActivity {
             {
                 //sharedpref
                 //startActivity(new Intent(getApplicationContext(),UserHome.class));
-                Intent i = new Intent(getApplicationContext(), UserHome.class);
+                Intent i = new Intent(getApplicationContext(), ListEvents.class);
                 i.putExtra("mobile_no",mob);
                 startActivity(i);
             }

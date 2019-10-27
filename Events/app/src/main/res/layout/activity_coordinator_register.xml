@@ -6,34 +6,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".CoordinatorLogin">
+    tools:context=".CoordinatorRegister">
 
-    <!--   <EditText
-           android:id="@+id/coordinator_name"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"/> -->
+    <EditText
+        android:hint="Name"
+        android:id="@+id/coordinator_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <EditText
         android:hint="Mobile"
         android:id="@+id/coordinator_mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
+        android:hint="Email"
+        android:id="@+id/coordinator_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
         android:hint="Password"
-        android:id="@+id/password"
+        android:id="@+id/coordinator_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
-        android:id="@+id/login"
+        android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Login" />
-    <TextView
-        android:id="@+id/coordinator_register"
-        android:text="New Coordinator ?"
-        android:onClick="new_coordinator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
+        android:hint="Register" />
 
 </LinearLayout>

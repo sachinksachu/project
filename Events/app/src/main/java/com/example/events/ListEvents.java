@@ -146,7 +146,6 @@ public class ListEvents extends AppCompatActivity {
                 JSONArray js = new JSONArray(result);
                 JSONObject jobj = null;
                 event_id = new String[js.length()];
-
                 eventname = new String[js.length()];
                 photo = new String[js.length()];
                 location = new String[js.length()];
@@ -218,7 +217,6 @@ public class ListEvents extends AppCompatActivity {
 
             TextView description = (TextView) convertView.findViewById(R.id.description_text);
             description.setText(al_description.get(position));
-
 
           /*  TextView location = (TextView) convertView.findViewById(R.id.event_date_text);
             location.setText(al_event_date.get(position));

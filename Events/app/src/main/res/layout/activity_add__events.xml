@@ -3,39 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Add_Events">
     <TextView
+        android:text="Add Events"
         android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
+        android:hint="Event Name"
         android:id="@+id/nameevent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
+        android:hint="Event Description"
         android:id="@+id/event_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <android.widget.SearchView
+        android:hint="Venue"
         android:id="@+id/place"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
      />
 
     <Button
+        android:text="Choose Date"
         android:id="@+id/Choosedate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
+        android:hint="Choose Time"
         android:id="@+id/Choosetime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
+        android:hint="Upload Image"
         android:id="@+id/UploadImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -45,14 +53,15 @@
         android:layout_height="wrap_content"/>
 
     <Button
+        android:hint="Upload"
         android:id="@+id/buttonUpload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="200dp"
+        android:layout_height="250dp" />
 
 
 </LinearLayout>
