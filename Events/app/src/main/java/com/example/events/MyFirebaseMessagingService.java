@@ -29,6 +29,9 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 /**
  * NOTE: There can only be one service in each app that receives FCM messages. If multiple
  * are declared in the Manifest then the first one will be chosen.
@@ -145,6 +148,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, ViewEachEvents.class);
+        //i.putExtra("event_id",al_event_id.get(position));
+        try {
+            JSONArray js = new JSONArray(messageBody);
+            intent.putExtra("event_id",js.getString(0));
+            intent.putExtra("event_name",js.getString(1));
+            intent.putExtra("description",js.getString(2));
+            intent.putExtra("location",js.getString(3));
+            intent.putExtra("event_date",js.getString(4));
+            intent.putExtra("event_time",js.getString(5));
+            intent.putExtra("photo",js.getString(6));
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
