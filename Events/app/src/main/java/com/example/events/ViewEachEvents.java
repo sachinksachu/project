@@ -14,9 +14,9 @@ import com.squareup.picasso.Picasso;
 
 public class ViewEachEvents extends AppCompatActivity {
 
-    TextView event_name,venue,describe;
+    TextView event_name,venue,describe,event_id_vu;
     ImageView pic;
-    String url;
+    String url,event_id,eventname;
     Button book;
 
     @Override
@@ -25,12 +25,14 @@ public class ViewEachEvents extends AppCompatActivity {
         setContentView(R.layout.activity_view_each_events);
 
         Intent intent = getIntent();
-        String eventname = intent.getStringExtra("eventname");
+        eventname = intent.getStringExtra("eventname");
+        event_id = intent.getStringExtra("event_id");
         String photo = intent.getStringExtra("photo");
         book = findViewById(R.id.Book_Ticket);
         url = "http://192.168.7.122/image/"+photo;
-        Toast.makeText(getApplicationContext(),url, Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),url, Toast.LENGTH_LONG).show();
         pic= findViewById(R.id.displayimage);
+
 
         Picasso.with(this)
                 .load(url)
@@ -41,7 +43,10 @@ public class ViewEachEvents extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent i = new Intent(getApplicationContext(), Booking.class);
+                i.putExtra("event_id",event_id);
+                Toast.makeText(getApplicationContext(),event_id, Toast.LENGTH_SHORT).show();
                 startActivity(i);
+
             }
         });
 

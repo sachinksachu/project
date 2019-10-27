@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -45,7 +46,7 @@ import java.util.List;
 public class ListEvents extends AppCompatActivity {
     String urladdress = "http://192.168.7.122/list_event.php";
     //String imageUri = "http://192.168.7.122/image/hackathon%20india.jpg";
-    String[] eventname,location,description,event_date,event_time;
+    String[] eventname,location,description,event_date,event_time,event_id;
     String[] photo;
     String[] imagepath;
     BufferedInputStream is;
@@ -53,6 +54,7 @@ public class ListEvents extends AppCompatActivity {
     ImageView imageView;
     CardView card;
     ListView listView;
+    ArrayList<String> al_event_id = new ArrayList<String>();
     ArrayList<String> al_eventname = new ArrayList<String>();
     ArrayList<String> al_photo = new ArrayList<String>();
     ArrayList<String> al_description = new ArrayList<String>();
@@ -86,6 +88,8 @@ public class ListEvents extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getApplicationContext(), ViewEachEvents.class);
+                i.putExtra("event_id",al_event_id.get(position));
+
                 i.putExtra("eventname",al_eventname.get(position));
                 i.putExtra("photo",al_photo.get(position));
                 i.putExtra("description",al_description.get(position));
@@ -141,6 +145,8 @@ public class ListEvents extends AppCompatActivity {
             try {
                 JSONArray js = new JSONArray(result);
                 JSONObject jobj = null;
+                event_id = new String[js.length()];
+
                 eventname = new String[js.length()];
                 photo = new String[js.length()];
                 location = new String[js.length()];
@@ -150,6 +156,7 @@ public class ListEvents extends AppCompatActivity {
 
                 for (int i = 0; i < js.length(); i++) {
                     jobj = js.getJSONObject(i);
+                    event_id[i] = jobj.getString("event_id");
                     eventname[i] = jobj.getString("eventname");
                     photo[i] = jobj.getString("photo");
                     location[i] = jobj.getString("location");
@@ -157,7 +164,7 @@ public class ListEvents extends AppCompatActivity {
                     event_time[i] = jobj.getString("event_time");
                     event_date[i] = jobj.getString("event_date");
 
-
+                    al_event_id.add(jobj.getString("event_id"));
                     al_eventname.add(jobj.getString("eventname"));
                     al_photo.add(jobj.getString("photo"));
                     al_description.add(jobj.getString("description"));
@@ -211,6 +218,7 @@ public class ListEvents extends AppCompatActivity {
 
             TextView description = (TextView) convertView.findViewById(R.id.description_text);
             description.setText(al_description.get(position));
+
 
           /*  TextView location = (TextView) convertView.findViewById(R.id.event_date_text);
             location.setText(al_event_date.get(position));

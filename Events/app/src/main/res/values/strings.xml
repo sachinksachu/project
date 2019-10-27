@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Events</string>
+    <string name="GPSAlertDialogTitle">x</string>
+    <string name="GPSAlertDialogMessage">y</string>
+    <string name="action_settings">z</string>
+    <string name="cancel">a</string>
 </resources>

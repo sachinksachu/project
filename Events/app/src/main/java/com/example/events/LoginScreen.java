@@ -132,7 +132,10 @@ public class LoginScreen extends AppCompatActivity {
             if(result.equals("LoginSuccess"))
             {
                 //sharedpref
-                startActivity(new Intent(getApplicationContext(),UserHome.class));
+                //startActivity(new Intent(getApplicationContext(),UserHome.class));
+                Intent i = new Intent(getApplicationContext(), UserHome.class);
+                i.putExtra("mobile_no",mob);
+                startActivity(i);
             }
             else {
 
