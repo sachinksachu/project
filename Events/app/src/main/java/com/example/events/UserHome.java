@@ -18,6 +18,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -80,9 +81,7 @@ public class UserHome extends AppCompatActivity {
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
 
                 locationTrack = new LocationTrack(UserHome.this);
 
@@ -99,15 +98,16 @@ public class UserHome extends AppCompatActivity {
                     locationTrack.showSettingsAlert();
                 }
 
-            }
-        });
+        final Handler ha=new Handler();
+        ha.postDelayed(new Runnable() {
 
-        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void run() {
                 getAdd();
+
+                ha.postDelayed(this, 10000);
             }
-        });
+        }, 10000);
 
 
 
@@ -231,6 +231,10 @@ public class UserHome extends AppCompatActivity {
     }
     public void getAdd()
     {
+        longitude = locationTrack.getLongitude();
+        latitude = locationTrack.getLatitude();
+
+        Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
