@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class ViewEachEvents extends AppCompatActivity {
 
-    TextView event_name,venue,describe,event_id_vu;
+    TextView event_name,venue,describe,date,time,eventid;
     ImageView pic;
-    String url,event_id,eventname,photo,desc;
+    String url,event_id,eventname,photo,desc,da_te,ti_me,loc;
     Button book;
 
     double latitude, longitude;
@@ -43,12 +43,32 @@ public class ViewEachEvents extends AppCompatActivity {
         event_id = intent.getStringExtra("event_id");
         eventname = intent.getStringExtra("eventname");
          desc = intent.getStringExtra("description");
+        loc = intent.getStringExtra("location");
+        da_te = intent.getStringExtra("event_date");
+        ti_me = intent.getStringExtra("event_time");
+        Toast.makeText(getApplicationContext(),desc, Toast.LENGTH_LONG).show();
+
+        eventid=findViewById(R.id.event_id);
+        eventid.setText(event_id);
+
         photo = intent.getStringExtra("photo");
         book = findViewById(R.id.Book_Ticket);
-        event_name = findViewById(R.id.eventname);
+
+        event_name = findViewById(R.id.eventname2);
         event_name.setText(eventname);
+
         describe = findViewById(R.id.description);
         describe.setText(desc);
+
+        venue = findViewById(R.id.location);
+        venue.setText(loc);
+
+        date = findViewById(R.id.event_date);
+        date.setText(da_te);
+
+        time = findViewById(R.id.event_time);
+        time.setText(ti_me);
+
 
         url = "http://192.168.7.122/image/"+photo;
        // Toast.makeText(getApplicationContext(),url, Toast.LENGTH_LONG).show();

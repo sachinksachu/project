@@ -136,8 +136,16 @@ public class ListEvents extends AppCompatActivity {
 
             @Override
             public void run() {
-                if(city_name.getText().toString().matches(""))
+                if(city_name.getText().toString().matches("")) {
                     getAdd();
+
+                    StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
+                    try {
+                        new get(ListEvents.this).execute();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 ha.postDelayed(this, 10000);
             }
@@ -146,12 +154,7 @@ public class ListEvents extends AppCompatActivity {
 
 
 
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
-        try {
-            new get(ListEvents.this).execute();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -159,7 +162,6 @@ public class ListEvents extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getApplicationContext(), ViewEachEvents.class);
                 i.putExtra("event_id",al_event_id.get(position));
-
                 i.putExtra("eventname",al_eventname.get(position));
                 i.putExtra("photo",al_photo.get(position));
                 i.putExtra("description",al_description.get(position));
@@ -192,13 +194,14 @@ public class ListEvents extends AppCompatActivity {
         protected String doInBackground(String... arg0) {
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                //nameValuePairs.add(new BasicNameValuePair("eventname", eventname));
-                nameValuePairs.add(new BasicNameValuePair("description", ""));
+                nameValuePairs.add(new BasicNameValuePair("location", city));
+                //nameValuePairs.add(new BasicNameValuePair("description", ""));
 
                  url = "http://192.168.7.122/list_event.php";
+
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
-                //httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 ResponseHandler<String> responseHandler = new BasicResponseHandler();
                 g = httpClient.execute(httpPost, responseHandler);
 

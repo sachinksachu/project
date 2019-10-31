@@ -92,7 +92,7 @@ public class UserHome extends AppCompatActivity {
                      longitude = locationTrack.getLongitude();
                      latitude = locationTrack.getLatitude();
 
-                    Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
                 } else {
 
                     locationTrack.showSettingsAlert();
@@ -234,7 +234,7 @@ public class UserHome extends AppCompatActivity {
         longitude = locationTrack.getLongitude();
         latitude = locationTrack.getLatitude();
 
-        Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
