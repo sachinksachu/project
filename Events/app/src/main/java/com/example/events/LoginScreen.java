@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +22,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -36,7 +40,7 @@ public class LoginScreen extends AppCompatActivity {
 
     EditText mobile,password;
     Button login,register,b2;
-    String mob,passw;
+    String mob,passw,user_id;
     TextView newuser;
 
     @Override
@@ -51,11 +55,14 @@ public class LoginScreen extends AppCompatActivity {
         //newuser = findViewById(R.id.user_register);
         b2 = findViewById(R.id.b2);
 
+        SharedPreferences prefs = getSharedPreferences("login", MODE_PRIVATE);
+        user_id= prefs.getString("user_id", "0");
+
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),UserHome.class);
+                Intent i = new Intent(getApplicationContext(),Category.class);
                 startActivity(i);
             }
         });
@@ -100,6 +107,7 @@ public class LoginScreen extends AppCompatActivity {
 
         Context ccc;
         String url="";
+
         get(Context c) {
 
             ccc = c;
@@ -151,20 +159,55 @@ public class LoginScreen extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             //  hlist.removeAllViewsInLayout();
-            if(result.equals("LoginSuccess"))
+
+            //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+                user_id = result;
+                Toast.makeText(getApplicationContext(), user_id, Toast.LENGTH_LONG).show();
+
+                if (user_id.equals("0"))
+                {
+                    Toast.makeText(getApplicationContext(), "Wrong email or password !", Toast.LENGTH_LONG).show();
+                    SharedPreferences.Editor editor = getSharedPreferences("login", MODE_PRIVATE).edit();
+                    editor.putString("user_id", user_id);
+                    editor.apply();
+                } else
+                {
+
+                    SharedPreferences.Editor editor = getSharedPreferences("login", MODE_PRIVATE).edit();
+                    editor.putString("user_id", user_id);
+                    editor.apply();
+                    Intent i = new Intent(getApplicationContext(), ListEvents.class);
+                    i.putExtra("mobile_no",mob);
+                    startActivity(i);
+                    finish();
+                }
+
+
+
+
+
+
+
+
+         /*   if(result.equals("LoginSuccess"))
             {
                 //sharedpref
+                //Toast.makeText(getApplicationContext(),mob, Toast.LENGTH_LONG).show();
+
+
                 //startActivity(new Intent(getApplicationContext(),UserHome.class));
                 Intent i = new Intent(getApplicationContext(), ListEvents.class);
                 i.putExtra("mobile_no",mob);
                 startActivity(i);
+                finish();
             }
             else {
 
             }
 
             Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
-
+        */
 
         }
     }

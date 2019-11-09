@@ -31,6 +31,12 @@
         android:layout_height="wrap_content"
      />
 
+    <EditText
+        android:hint="Event Number of Seats"
+        android:id="@+id/seat_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:text="Choose Date"
         android:id="@+id/Choosedate"

@@ -95,10 +95,11 @@ public class CoordinatorRegister extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
 
-            if(result.equals("LoginSuccess"))
+            if(result.equals("success"))
             {
 
                 startActivity(new Intent(getApplicationContext(),CoordinatorLogin.class));
+                finish();
             }
 
             Toast.makeText(getApplicationContext(),result.toString(), Toast.LENGTH_LONG).show();

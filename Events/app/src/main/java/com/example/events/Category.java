@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Category extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("user");
+    DatabaseReference myRef = database.getReference("user/chat");
 
     EditText editText,editText2;
     TextView txt;

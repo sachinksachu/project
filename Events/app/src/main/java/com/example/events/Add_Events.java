@@ -8,6 +8,7 @@ import android.app.SearchManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -88,12 +89,12 @@ public class Add_Events extends AppCompatActivity {
     TimePickerDialog.OnTimeSetListener mOnTimeSetListener;
     private static final int PICK_IMAGE_REQUEST =1;
     private static final int STORAGE_PERMISSION_CODE = 123;
-    EditText event_name;
+    EditText event_name,seat_view;
     EditText describe;
     SearchView searchView;
     Button addimage,pickdate,add,picktime;
     int mYear,mMonth,mDay;
-    String _date,eventname, description,location,_time;
+    String _date,eventname, description,location,_time,mobile_signin,seat;
     ImageView imageView;
     Uri selectedImage;
     Uri filePath;
@@ -118,6 +119,7 @@ public class Add_Events extends AppCompatActivity {
         event_name = findViewById(R.id.nameevent);
         describe = findViewById(R.id.event_desc);
         searchView = findViewById(R.id.place);
+        seat_view =  findViewById(R.id.seat_id);
 
         pickdate = findViewById(R.id.Choosedate);
         picktime = findViewById(R.id.Choosetime);
@@ -125,6 +127,9 @@ public class Add_Events extends AppCompatActivity {
         addimage = findViewById(R.id.UploadImage);
         imageView = findViewById(R.id.imageView);
         mTimePicker =findViewById(R.id.Timetext);
+
+        SharedPreferences prefs = getSharedPreferences("coord_login", MODE_PRIVATE);
+        mobile_signin = prefs.getString("coordinator_mobile", null);
 
         pickdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +155,7 @@ public class Add_Events extends AppCompatActivity {
             public void onClick(View v) {
                 eventname = event_name.getText().toString();
                 description = describe.getText().toString();
-
+                seat= seat_view.getText().toString();
                 _time = mTimePicker.getText().toString();
 
 
@@ -447,9 +452,11 @@ public class Add_Events extends AppCompatActivity {
                 String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("coord_id",mobile_signin));
                 nameValuePairs.add(new BasicNameValuePair("eventname",eventname));
                 nameValuePairs.add(new BasicNameValuePair("description",description));
                 nameValuePairs.add(new BasicNameValuePair("location",location));
+                nameValuePairs.add(new BasicNameValuePair("seat",seat));
                 nameValuePairs.add(new BasicNameValuePair("event_date",_date));
                 nameValuePairs.add(new BasicNameValuePair("event_time",_time));
                 nameValuePairs.add(new BasicNameValuePair("photo",encodedImage));
@@ -481,6 +488,8 @@ public class Add_Events extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
             Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
+            Intent i = new Intent(getApplicationContext(), UserHome.class);
+            startActivity(i);
 
 
         }

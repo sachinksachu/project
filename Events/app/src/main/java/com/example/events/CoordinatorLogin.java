@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +32,15 @@ public class CoordinatorLogin extends AppCompatActivity {
 
     EditText mobile,password;
     Button btn;
-    String mob ,passw;
+    String mob ,passw,coord_mobile_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coordinator_login);
+
+        SharedPreferences prefs = getSharedPreferences("coord_login", MODE_PRIVATE);
+        coord_mobile_id= prefs.getString("coordinator_mobile", "0");
 
         mobile= findViewById(R.id.coordinator_mobile);
         password= findViewById(R.id.password);
@@ -43,6 +51,7 @@ public class CoordinatorLogin extends AppCompatActivity {
             public void onClick(View v) {
                 mob=mobile.getText().toString();
                 passw=password.getText().toString();
+
                 new CoordinatorLogin.get(getApplicationContext()).execute();
 
 
@@ -80,7 +89,7 @@ public class CoordinatorLogin extends AppCompatActivity {
         protected String doInBackground(String... arg0) {
             try {
 
-
+               // Toast.makeText(getApplicationContext(), "INSIDE ", Toast.LENGTH_LONG).show();
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                 nameValuePairs.add(new BasicNameValuePair("mobile",mob));
                 nameValuePairs.add(new BasicNameValuePair("password",passw));
@@ -116,25 +125,36 @@ public class CoordinatorLogin extends AppCompatActivity {
         }
 
         @Override
-
-
         protected void onPostExecute(String result) {
-            //  hlist.removeAllViewsInLayout();
-            if(result.equals("LoginSuccess"))
-            {
-                //sharedpref
-                //startActivity(new Intent(getApplicationContext(),UserHome.class));
-                Intent i = new Intent(getApplicationContext(), Add_Events.class);
-                i.putExtra("mobile_no",mob);
-                startActivity(i);
-            }
-            else {
+            Log.e("SMK1",result);
+            coord_mobile_id = result;
+                if (coord_mobile_id.equals("0"))
+                {
+                    Toast.makeText(getApplicationContext(), "Wrong email or password !", Toast.LENGTH_LONG).show();
+                    SharedPreferences.Editor editor = getSharedPreferences("coord_login", MODE_PRIVATE).edit();
+                    editor.putString("coordinator_mobile", coord_mobile_id);
+                    editor.apply();
+                }
+
+                else {
+                    SharedPreferences.Editor editor = getSharedPreferences("coord_login", MODE_PRIVATE).edit();
+                    editor.putString("coordinator_mobile", coord_mobile_id);
+                    editor.apply();
+                    Intent i = new Intent(getApplicationContext(), UserHome.class);
+                    Toast.makeText(getApplicationContext(), coord_mobile_id, Toast.LENGTH_LONG).show();
+                    i.putExtra("mobile_no", mob);
+                    startActivity(i);
+                    finish();
+
+                }
 
             }
 
-            Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
 
 
-        }
+
+
+
+
     }
 }

@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -78,7 +79,7 @@ public class ListEvents extends AppCompatActivity {
     String[] photo;
     String[] imagepath;
     BufferedInputStream is;
-    String line, result;
+    String line, result,mobile_signin;
     ImageView imageView;
     CardView card;
     ListView listView;
@@ -98,6 +99,10 @@ public class ListEvents extends AppCompatActivity {
         card = findViewById(R.id.card_view);
         listView = findViewById(R.id.listview);
         city_name = findViewById(R.id.user_location);
+
+        SharedPreferences prefs = getSharedPreferences("login", MODE_PRIVATE);
+        mobile_signin = prefs.getString("mobile", null);
+        Toast.makeText(this,mobile_signin,Toast.LENGTH_LONG).show();
 
 
         permissions.add(ACCESS_FINE_LOCATION);
@@ -410,7 +415,8 @@ public class ListEvents extends AppCompatActivity {
             address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             city = addresses.get(0).getLocality();
 
-            city_name.setText(city);
+            //city_name.setText(city);
+            city_name.setText("Thiruvananthapuram");
         }catch (Exception ex){
 
         }
