@@ -67,13 +67,13 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
-       /* register.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),Registration.class);
+                Intent i = new Intent(getApplicationContext(),AdminLogin.class);
                 startActivity(i);
             }
-        });*/
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

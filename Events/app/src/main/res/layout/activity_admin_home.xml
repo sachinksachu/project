@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".AdminHome">
+
+    <Button
+        android:hint="Events List"
+        android:id="@+id/eventlist"
+        android:layout_margin="20dp"
+        android:textColorHint="@color/quantum_white_100"
+        android:background="@drawable/roundedbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:hint="Coordinators"
+        android:id="@+id/coordinators"
+        android:layout_margin="20dp"
+        android:textColorHint="@color/quantum_white_100"
+        android:background="@drawable/roundedbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:hint="Approve Events"
+        android:id="@+id/approve"
+        android:layout_margin="20dp"
+        android:textColorHint="@color/quantum_white_100"
+        android:background="@drawable/roundedbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:hint="Events"
+        android:id="@+id/events"
+        android:layout_margin="20dp"
+        android:textColorHint="@color/quantum_white_100"
+        android:background="@drawable/roundedbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

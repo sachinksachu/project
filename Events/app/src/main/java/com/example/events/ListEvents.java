@@ -2,9 +2,12 @@ package com.example.events;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -97,8 +100,10 @@ public class ListEvents extends AppCompatActivity {
         setContentView(R.layout.activity_list_events);
         imageView = findViewById(R.id.imageView);
         card = findViewById(R.id.card_view);
-        listView = findViewById(R.id.listview);
+        listView = findViewById(R.id.listview_eventList);
         city_name = findViewById(R.id.user_location);
+
+
 
         SharedPreferences prefs = getSharedPreferences("login", MODE_PRIVATE);
         mobile_signin = prefs.getString("mobile", null);
@@ -130,7 +135,7 @@ public class ListEvents extends AppCompatActivity {
             longitude = locationTrack.getLongitude();
             latitude = locationTrack.getLatitude();
 
-            Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
         } else {
 
             locationTrack.showSettingsAlert();
@@ -184,16 +189,23 @@ public class ListEvents extends AppCompatActivity {
     }
 
     class get extends AsyncTask<String, String, String> {
-
+        private ProgressDialog dialog;
         Context ccc;
         String url = "";
 
         get(Context c) throws JSONException {
 
             ccc = c;
+            dialog = new ProgressDialog(ListEvents.this);
         }
 
         String g = "error";
+
+       // @Override
+        //protected void onPreExecute() {
+        //    dialog.setMessage("Loading please wait.");
+        //    dialog.show();
+        //}
 
         @Override
         protected String doInBackground(String... arg0) {
@@ -263,6 +275,10 @@ public class ListEvents extends AppCompatActivity {
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
+
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
         }
     }
 
@@ -304,8 +320,7 @@ public class ListEvents extends AppCompatActivity {
             TextView event_date = (TextView) convertView.findViewById(R.id.event_time_text);
             event_date.setText(al_event_time.get(position));
 
-            TextView event_time = (TextView) convertView.findViewById(R.id.location_text);
-            event_time.setText(al_location.get(position));*/
+            */
 
 
 
@@ -406,6 +421,8 @@ public class ListEvents extends AppCompatActivity {
     {
         longitude = locationTrack.getLongitude();
         latitude = locationTrack.getLatitude();
+        //longitude =8.545531;
+        //latitude = 76.90314;
 
         Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
         try {
@@ -413,10 +430,10 @@ public class ListEvents extends AppCompatActivity {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
             address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            city = addresses.get(0).getLocality();
-
-            //city_name.setText(city);
-            city_name.setText("Thiruvananthapuram");
+            //city = addresses.get(0).getLocality();
+            city="Thiruvananthapuram";
+            city_name.setText(city);
+            //city_name.setText("Thiruvananthapuram");
         }catch (Exception ex){
 
         }

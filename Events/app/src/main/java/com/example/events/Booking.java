@@ -2,14 +2,18 @@ package com.example.events;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,9 @@ import org.json.JSONException;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Booking extends AppCompatActivity {
 
@@ -40,6 +47,7 @@ public class Booking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
+
 
         SharedPreferences prefs = getSharedPreferences("login", MODE_PRIVATE);
         userid_shared= prefs.getString("user_id", "0");
@@ -144,6 +152,7 @@ public class Booking extends AppCompatActivity {
 
             number_seats=result;
             number_of_seats=Integer.parseInt(number_seats);
+            seat_view.setText(number_seats);
 
             Toast.makeText(getApplicationContext(),"Number of seats "+number_of_seats, Toast.LENGTH_LONG).show();
 
@@ -199,8 +208,29 @@ public class Booking extends AppCompatActivity {
 
 
         protected void onPostExecute(String result) {
+            if(result.trim().equals("success"))
+            {
 
-            Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),result+"New", Toast.LENGTH_LONG).show();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Booking.this);
+                //builder.setTitle("Name");
+                final View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+                builder.setView(customLayout);
+                AlertDialog dialog = builder.create();
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        finish();
+                    }
+                });
+                dialog.show();
+
+
+            }
+            else{
+                finish();
+            }
 
 
         }
@@ -255,9 +285,12 @@ public class Booking extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
 
-            Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
+           // CustomDialogClass cdd=new CustomDialogClass(Booking.this);
+            //Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
+
 
 
         }
     }
+    //CustomDialogClass cdd=new CustomDialogClass(Booking.this);
 }
