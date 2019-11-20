@@ -107,7 +107,7 @@ public class UserHome extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), ViewEachEvents.class);
+                Intent i = new Intent(getApplicationContext(), Coordinator_ViewEachEvents.class);
                 i.putExtra("event_id",al_event_id.get(position));
                 i.putExtra("eventname",al_eventname.get(position));
                 i.putExtra("photo",al_photo.get(position));

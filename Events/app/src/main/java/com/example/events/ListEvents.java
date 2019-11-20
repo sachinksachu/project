@@ -1,9 +1,11 @@
 package com.example.events;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -22,6 +24,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -64,7 +69,7 @@ public class ListEvents extends AppCompatActivity {
 
     double latitude, longitude;
     TextView city_name;
-    String address,city;
+    String address,city="";
 
 
 
@@ -75,7 +80,7 @@ public class ListEvents extends AppCompatActivity {
     private final static int ALL_PERMISSIONS_RESULT = 101;
     LocationTrack locationTrack;
 
-
+    int flag=0;
     String urladdress = "http://192.168.7.122/list_event.php";
     //String imageUri = "http://192.168.7.122/image/hackathon%20india.jpg";
     String[] eventname,location,description,event_date,event_time,event_id;
@@ -98,6 +103,22 @@ public class ListEvents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_events);
+
+
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getloc(); // your code
+                setloc();
+                try {
+                    new get(ListEvents.this).execute();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                pullToRefresh.setRefreshing(false);
+            }
+        });
         imageView = findViewById(R.id.imageView);
         card = findViewById(R.id.card_view);
         listView = findViewById(R.id.listview_eventList);
@@ -135,19 +156,21 @@ public class ListEvents extends AppCompatActivity {
             longitude = locationTrack.getLongitude();
             latitude = locationTrack.getLatitude();
 
-           // Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
+
+          // Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
         } else {
 
             locationTrack.showSettingsAlert();
         }
 
-        final Handler ha=new Handler();
-        ha.postDelayed(new Runnable() {
 
-            @Override
-            public void run() {
-                if(city_name.getText().toString().matches("")) {
-                    getAdd();
+
+
+
+
+
+                    getloc();
+
 
                     StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
                     try {
@@ -155,11 +178,8 @@ public class ListEvents extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
 
-                ha.postDelayed(this, 10000);
-            }
-        }, 10000);
+
 
 
 
@@ -185,7 +205,6 @@ public class ListEvents extends AppCompatActivity {
         });
 
         city_name.setText(city);
-
     }
 
     class get extends AsyncTask<String, String, String> {
@@ -411,32 +430,72 @@ public class ListEvents extends AppCompatActivity {
                 .show();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        locationTrack.stopListener();
-    }
 
-    public void getAdd()
+    public void getloc()
     {
+        //LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+
+
+        //locationTrack = new LocationTrack(ListEvents.this);
+
+
         longitude = locationTrack.getLongitude();
         latitude = locationTrack.getLatitude();
         //longitude =8.545531;
         //latitude = 76.90314;
-
+        Toast.makeText(getApplicationContext(), "INSIDE getADD", Toast.LENGTH_SHORT).show();
         Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
             address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            //city = addresses.get(0).getLocality();
-            city="Thiruvananthapuram";
+            city = addresses.get(0).getLocality();
             city_name.setText(city);
-            //city_name.setText("Thiruvananthapuram");
+            //
+            Toast.makeText(getApplicationContext(), "CITY "+city, Toast.LENGTH_SHORT).show();
         }catch (Exception ex){
 
         }
 
+
+    }
+    public  void setloc(){
+        city_name.setText("Thiruvananthapuram");
+        city="Thiruvananthapuram";
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.user_icon, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.icon_home:
+                startActivity(new Intent(getApplicationContext(),UserOptions.class));
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.icon_home:
+                startActivity(new Intent(getApplicationContext(),UserOptions.class));
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }

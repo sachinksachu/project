@@ -28,7 +28,10 @@
 
 
 
-
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pullToRefresh">
 
         <ListView
             android:paddingLeft="100dp"
@@ -37,6 +40,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/listview_eventList"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>
