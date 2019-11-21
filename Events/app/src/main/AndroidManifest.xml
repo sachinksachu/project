@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserOptions"></activity>
+        <activity android:name=".CategoryPref"></activity>
+        <activity android:name=".UserOptions" />
         <activity android:name=".Coordinator_ViewEachEvents" />
         <activity android:name=".AdminListEvents" />
         <activity android:name=".AdminLogin" />

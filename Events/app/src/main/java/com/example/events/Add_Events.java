@@ -89,12 +89,12 @@ public class Add_Events extends AppCompatActivity {
     TimePickerDialog.OnTimeSetListener mOnTimeSetListener;
     private static final int PICK_IMAGE_REQUEST =1;
     private static final int STORAGE_PERMISSION_CODE = 123;
-    EditText event_name,seat_view;
+    EditText event_name,seat_view,category;
     EditText describe;
     SearchView searchView;
     Button addimage,pickdate,add,picktime;
     int mYear,mMonth,mDay;
-    String _date,eventname, description,location,_time,mobile_signin,seat;
+    String _date,eventname, description,location,_time,mobile_signin,seat,category_s;
     ImageView imageView;
     Uri selectedImage;
     Uri filePath;
@@ -118,6 +118,7 @@ public class Add_Events extends AppCompatActivity {
 
         event_name = findViewById(R.id.nameevent);
         describe = findViewById(R.id.event_desc);
+        category = findViewById(R.id.event_category);
         searchView = findViewById(R.id.place);
         seat_view =  findViewById(R.id.seat_id);
 
@@ -157,6 +158,7 @@ public class Add_Events extends AppCompatActivity {
                 description = describe.getText().toString();
                 seat= seat_view.getText().toString();
                 _time = mTimePicker.getText().toString();
+                category_s = category.getText().toString();
 
 
                 new Add_Events.get(getApplicationContext()).execute();
@@ -455,6 +457,7 @@ public class Add_Events extends AppCompatActivity {
                 nameValuePairs.add(new BasicNameValuePair("coord_id",mobile_signin));
                 nameValuePairs.add(new BasicNameValuePair("eventname",eventname));
                 nameValuePairs.add(new BasicNameValuePair("description",description));
+                nameValuePairs.add(new BasicNameValuePair("category",category_s));
                 nameValuePairs.add(new BasicNameValuePair("location",location));
                 nameValuePairs.add(new BasicNameValuePair("seat",seat));
                 nameValuePairs.add(new BasicNameValuePair("event_date",_date));

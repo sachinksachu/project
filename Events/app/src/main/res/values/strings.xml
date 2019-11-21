@@ -4,4 +4,9 @@
     <string name="GPSAlertDialogMessage">y</string>
     <string name="action_settings">z</string>
     <string name="cancel">a</string>
+
+    <string name="workshop">Workshop</string>
+    <string name="fest">Fest</string>
+    <string name="seminar">Seminar</string>
+    <string name="parties">Parties</string>
 </resources>

@@ -7,6 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Add_Events">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <TextView
         android:text="Add Events"
         android:id="@+id/head"
@@ -24,6 +32,14 @@
         android:id="@+id/event_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+            <EditText
+                android:hint="Event Category"
+                android:id="@+id/event_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
     <android.widget.SearchView
         android:hint="Venue"
         android:id="@+id/place"
@@ -68,6 +84,10 @@
         android:id="@+id/imageView"
         android:layout_width="200dp"
         android:layout_height="250dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>
