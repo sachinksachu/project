@@ -1,5 +1,6 @@
 package com.example.events;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -8,6 +9,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -216,5 +220,42 @@ public class Coordinator_ViewEachEvents extends AppCompatActivity {
 
 
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.coord_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.update:
+                Intent i = new Intent(getApplicationContext(), UpdateEvents.class);
+                i.putExtra("event_id",event_id_intent);
+                startActivity(i);
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.update:
+                Intent i = new Intent(getApplicationContext(), UpdateEvents.class);
+                i.putExtra("event_id",event_id_intent);
+                startActivity(i);
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
