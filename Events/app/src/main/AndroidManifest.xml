@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ApproveEvents"></activity>
+        <activity android:name=".MyBookings"></activity>
+        <activity android:name=".ApproveEvents" />
         <activity android:name=".UpdateEvents" />
         <activity android:name=".CategoryPref" />
         <activity android:name=".UserOptions" />

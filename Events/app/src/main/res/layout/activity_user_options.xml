@@ -7,7 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".UserOptions">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
     <Button
         android:id="@+id/bSearch"
         android:layout_width="match_parent"
@@ -21,8 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="My Events"
-        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:text="My Bookings"
+        android:drawableLeft="@android:drawable/ic_dialog_map"
         android:textSize="24sp"/>
     <Button
         android:id="@+id/bCategory"
@@ -30,8 +34,9 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Category Preference"
-        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:drawableLeft="@android:drawable/ic_menu_gallery"
         android:textSize="24sp"/>
+</LinearLayout>
 
 
 </LinearLayout>

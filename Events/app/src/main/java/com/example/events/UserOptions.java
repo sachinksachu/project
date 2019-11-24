@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class UserOptions extends AppCompatActivity {
 
-    Button search,myEvents,preference;
+    Button search,myBookings,preference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +17,7 @@ public class UserOptions extends AppCompatActivity {
 
         preference = findViewById(R.id.bCategory);
         search = findViewById(R.id.bSearch);
-        myEvents = findViewById(R.id.bMyevents);
+        myBookings = findViewById(R.id.bMyevents);
 
         preference.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,11 +35,11 @@ public class UserOptions extends AppCompatActivity {
             }
         });
 
-        myEvents.setOnClickListener(new View.OnClickListener() {
+        myBookings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-                startActivity(new Intent(getApplicationContext(),LoginScreen.class));
+                startActivity(new Intent(getApplicationContext(),MyBookings.class));
             }
         });
     }

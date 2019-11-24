@@ -87,7 +87,7 @@ public class ListEvents extends AppCompatActivity {
     String[] photo;
     String[] imagepath;
     BufferedInputStream is;
-    String line, result,mobile_signin;
+    String line, result,user_id;
     ImageView imageView;
     CardView card;
     ListView listView;
@@ -127,8 +127,8 @@ public class ListEvents extends AppCompatActivity {
 
 
         SharedPreferences prefs = getSharedPreferences("login", MODE_PRIVATE);
-        mobile_signin = prefs.getString("mobile", null);
-        Toast.makeText(this,mobile_signin,Toast.LENGTH_LONG).show();
+        user_id= prefs.getString("user_id", "0");
+       // Toast.makeText(this,user_id,Toast.LENGTH_LONG).show();
 
 
         permissions.add(ACCESS_FINE_LOCATION);
@@ -206,15 +206,7 @@ public class ListEvents extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getApplicationContext(),Integer.toString(position),Toast.LENGTH_LONG).show();
-
-                return false;
-            }
-        });
 
         city_name.setText(city);
     }
@@ -456,8 +448,8 @@ public class ListEvents extends AppCompatActivity {
         latitude = locationTrack.getLatitude();
         //longitude =8.545531;
         //latitude = 76.90314;
-        Toast.makeText(getApplicationContext(), "INSIDE getADD", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(), "INSIDE getADD", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(), "Longitude:" + longitude + "\nLatitude:" + latitude, Toast.LENGTH_SHORT).show();
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
@@ -466,7 +458,7 @@ public class ListEvents extends AppCompatActivity {
             city = addresses.get(0).getLocality();
             city_name.setText(city);
             //
-            Toast.makeText(getApplicationContext(), "CITY "+city, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(), "CITY "+city, Toast.LENGTH_SHORT).show();
         }catch (Exception ex){
 
         }
