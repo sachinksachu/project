@@ -31,5 +31,14 @@ public class AdminHome extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        approval.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),ApproveEvents.class);
+                startActivity(i);
+            }
+        });
+
     }
 }

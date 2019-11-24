@@ -39,7 +39,7 @@ public class Booking extends AppCompatActivity {
 
     TextView num,seat_view;
     Button add_,minus_,book;
-    int counter = 0;
+    int counter = 1;
     String event_id ,userid_shared,number_seats,seat_to_string;
     int event_id_to_int, user_id_to_int,number_of_seats;
 

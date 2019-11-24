@@ -200,7 +200,19 @@ public class ListEvents extends AppCompatActivity {
                 i.putExtra("event_time",al_event_time.get(position));
 
 
+
+
+
                 startActivity(i);
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(getApplicationContext(),Integer.toString(position),Toast.LENGTH_LONG).show();
+
+                return false;
             }
         });
 

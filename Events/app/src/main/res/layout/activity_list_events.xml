@@ -34,11 +34,12 @@
             android:id="@+id/pullToRefresh">
 
         <ListView
-            android:paddingLeft="100dp"
+            android:padding="15dp"
+            android:elevation="3dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+
             android:id="@+id/listview_eventList"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

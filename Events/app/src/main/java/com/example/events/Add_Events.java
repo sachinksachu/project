@@ -489,10 +489,12 @@ public class Add_Events extends AppCompatActivity {
 
 
         protected void onPostExecute(String result) {
+            if(result.trim().equals("success")) {
 
-            Toast.makeText(getApplicationContext(),result, Toast.LENGTH_LONG).show();
-            Intent i = new Intent(getApplicationContext(), UserHome.class);
-            startActivity(i);
+                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                Intent i = new Intent(getApplicationContext(), UserHome.class);
+                startActivity(i);
+            }
 
 
         }
